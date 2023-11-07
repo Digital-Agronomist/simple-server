@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express');
 // const https = require('https');
 const app = express();
-const { mean } = require('simple-statistics');
+const { mean, standardDeviation, variance } = require('simple-statistics');
 const { map } = require('ramda');
 const port = 3000
 
@@ -16,12 +16,19 @@ app.get('/', (req, res) => {
     Authorization: `Bearer ${API_KEY}`,
   };
 
+  const getTempArray = (list) => map((l) => l.air_temp, list)
 
-  fetch("https://api.solcast.com.au/data/historic/radiation_and_weather.json?latitude=3.512008&longitude=-76.357677&azimuth=44&tilt=90&start=2019-10-01T17:00:00.000Z&duration=P1D&format=json&time_zone=utc", { headers: {...headers} } )
+
+  fetch("https://api.solcast.com.au/data/historic/radiation_and_weather.json?latitude=3.512008&longitude=-76.357677&azimuth=44&tilt=90&start=2019-10-01T17:00:00.000Z&duration=P31D&format=json&time_zone=utc&output_parameters=relative_humidity,wind_speed_10m,air_temp,ghi,dni,dhi", { headers: {...headers} } )
   .then((response) => {
     if (response.ok) {
       response.json().then(json => {
-        console.log(json)
+        const tempArray = getTempArray(json.estimated_actuals);
+        console.log(tempArray);
+
+        console.log('MEAN', mean(tempArray));
+        console.log('standardDeviation', standardDeviation(tempArray));
+        console.log('variance', variance(tempArray));
       })
     }
   })
