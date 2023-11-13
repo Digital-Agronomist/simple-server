@@ -5,41 +5,16 @@ const app = express();
 const { mean, standardDeviation, variance } = require('simple-statistics');
 const { map } = require('ramda');
 const differenceInHours = require('date-fns/differenceInHours');
-const { parse, addMinutes } = require('date-fns');
-const { zonedTimeToUtc, format } = require('date-fns-tz');
-const port = 3000;
+const processSunriseSunset = require('./utils');
+
+
+
+const port = process.env.APP_PORT || 3000;
 
 const getPhotoperiodFromAPI =() => {
 
 }
 
-const testing = (date, utcOffset) => {
-  
-
-  // Example date-time in America/Chicago time zone
-  const dateTimeChicagoStart = `${date} 4:58:07 AM`;
-  const dateTimeChicagoEnd = `${date} 7:13:36 PM`;
-
-  // Parse the local date-time strings
-  const startDateTime = parse(dateTimeChicagoStart, 'yyyy-M-d h:mm:ss a', new Date());
-  const endDateTime = parse(dateTimeChicagoEnd, 'yyyy-M-d h:mm:ss a', new Date());
-
-  // Adjust by UTC offset
-  const startDateTimeUtc = addMinutes(startDateTime, utcOffset);
-  const endDateTimeUtc = addMinutes(endDateTime, utcOffset);
-
-  // console.log('first', startDateTimeUtc, endDateTimeUtc);
-
-  return { startDateTimeUtc, endDateTimeUtc };
-
-  // Format for SQL
-  const sqlFormat = format(dateTimeUtc, "yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-  console.log(sqlFormat); // This will be in UTC, formatted for SQL
-
-
-
-}
 
 app.get('/', (req, res) => {
 
@@ -54,7 +29,7 @@ app.get('/', (req, res) => {
   // const left = "7:20:32 PM";
   // const right = "9:52:03 AM";
 
-  const { startDateTimeUtc, endDateTimeUtc } = testing('2000-9-3', -240);
+  const { startDateTimeUtc, endDateTimeUtc } = processSunriseSunset('2000-9-3', -240);
 
   console.log(startDateTimeUtc, startDateTimeUtc)
 
