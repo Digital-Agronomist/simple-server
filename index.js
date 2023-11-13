@@ -4,7 +4,27 @@ const express = require('express');
 const app = express();
 const { mean, standardDeviation, variance } = require('simple-statistics');
 const { map } = require('ramda');
-const port = 3000
+const differenceInHours = require('date-fns/differenceInHours');
+const { parseISO } = require('date-fns');
+const { zonedTimeToUtc, format } = require('date-fns-tz');
+const port = 3000;
+
+const testing = () => {
+  
+
+// Example date-time in America/Chicago time zone
+const dateTimeChicago = '2000-09-26T09:52:03';
+const timeZone = 'America/Chicago';
+
+// Convert to UTC
+const dateTimeUtc = zonedTimeToUtc(dateTimeChicago, timeZone);
+
+// Format for SQL
+const sqlFormat = format(dateTimeUtc, "yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+console.log(sqlFormat); // This will be in UTC, formatted for SQL
+
+}
 
 app.get('/', (req, res) => {
 
@@ -15,6 +35,17 @@ app.get('/', (req, res) => {
     Accept: 'application/json',
     Authorization: `Bearer ${API_KEY}`,
   };
+
+  // const left = "7:20:32 PM";
+  // const right = "9:52:03 AM";
+
+  // const parsed = parseISO(`${right}T$left}`);
+
+  // const hours = differenceInHours(left, right);
+
+  // console.log("****hours" , hours)
+
+  testing()
 
   const getTempArray = (list) => map((l) => l.air_temp, list)
 
