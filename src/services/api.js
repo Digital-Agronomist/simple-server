@@ -3,6 +3,9 @@ import { api as apiConstants,  headers } from '../constants/api';
 
 const { solarAPIurl, sunrisesunsetAPIurl } = apiConstants;
 
+const outputParameters = 'relative_humidity,wind_speed_10m,air_temp,ghi';
+
+
 // const buildSunriseSunsetAPIbody = (params) => ({
     
 // });
@@ -17,13 +20,14 @@ const buildAPIinstance = (baseURL) => create({
 const apiInstance = (apiString) =>
     buildAPIinstance(apiString === 'solarAPI' ? solarAPIurl : sunrisesunsetAPIurl);
 
-export async function getRequest(apiString, params) {
+export async function getRequest(apiString, endpoint, params) {
 
     const api = apiInstance(apiString)
 
     try {
 
-        const response = await api.get('/json', { ...params });
+        const response = await api.get(endpoint, { ...params });
+        console.log(response.params)
 
         // console.log('params', params)
 
@@ -41,8 +45,18 @@ export async function getRequest(apiString, params) {
     
 }
 
+export async function getSolarAPI(params) {
+
+    const data = await getRequest('solarAPI', '/data/historic/radiation_and_weather.json', {
+        ...params,
+        output_parameters: outputParameters
+    });
+    return data;
+
+}
+
 export async function getPhotoperiodFromAPI(params) {
-    const data = await getRequest('sunrisesunsetAPI', params);
+    const data = await getRequest('sunrisesunsetAPI', '/json', params);
     // console.log('data from  sunset', data);
     return data;
 };

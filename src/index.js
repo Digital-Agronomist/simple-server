@@ -6,7 +6,7 @@ const { mean, standardDeviation, variance } = require('simple-statistics');
 import { map } from 'ramda';
 import differenceInHours from 'date-fns/differenceInHours';
 import { processSunriseSunset } from './utils';
-import { getPhotoperiodFromAPI } from './services/api';
+import { getPhotoperiodFromAPI, getSolarAPI } from './services/api';
 
 const date = '2019-05-15';
 
@@ -22,7 +22,17 @@ app.get('/', async (req, res) => {
     date
   };
 
-  await getPhotoperiodFromAPI({ ...queryParams });
+  const solarAPIparams = {
+    latitude: 3.512008,
+    longitude: -76.357677,
+    start: '2019-10-01T17:00:00.000Z',
+    format: 'json',
+    duration: 'P31D'
+  }
+
+  // await getPhotoperiodFromAPI({ ...queryParams });
+
+  await getSolarAPI({ ...solarAPIparams });
 
   // console.log(data);
 
