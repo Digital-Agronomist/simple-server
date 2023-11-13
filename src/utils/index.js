@@ -1,7 +1,7 @@
 const { parse, addMinutes } = require('date-fns');
 const { zonedTimeToUtc, format } = require('date-fns-tz');
 
-function processSunriseSunset(date, utcOffset) {
+export function processSunriseSunset(date, utcOffset) {
     const dateTimeChicagoStart = `${date} 4:58:07 AM`;
     const dateTimeChicagoEnd = `${date} 7:13:36 PM`;
   
@@ -21,5 +21,3 @@ function processSunriseSunset(date, utcOffset) {
 
     console.log(sqlFormat); // This will be in UTC, formatted for SQL
 }
-
-module.exports = processSunriseSunset;

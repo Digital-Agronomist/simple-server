@@ -5,6 +5,7 @@
   "license": "MIT",
   "author": "Juan Roa",
   "dependencies": {
+    "apisauce": "^3.0.1",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
     "dotenv": "^16.3.1",
@@ -13,9 +14,14 @@
     "simple-statistics": "^7.8.3"
   },
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "babel-node": "babel-node --presets='@babel/preset-env'",
+    "dev": "nodemon --exec npm run babel-node -- src/index.js"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.3",
+    "@babel/node": "^7.22.19",
+    "@babel/preset-env": "^7.23.3",
     "nodemon": "^3.0.1"
   }
 }

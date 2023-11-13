@@ -1,43 +1,36 @@
-require('dotenv').config()
+import 'dotenv/config'
 const express = require('express');
 // const https = require('https');
 const app = express();
 const { mean, standardDeviation, variance } = require('simple-statistics');
-const { map } = require('ramda');
-const differenceInHours = require('date-fns/differenceInHours');
-const processSunriseSunset = require('./utils');
+import { map } from 'ramda';
+import differenceInHours from 'date-fns/differenceInHours';
+import { processSunriseSunset } from './utils';
+import { getPhotoperiodFromAPI } from './services/api';
 
-
+const date = '2019-05-15';
 
 const port = process.env.APP_PORT || 3000;
 
-const getPhotoperiodFromAPI =() => {
+app.get('/', async (req, res) => {
 
-}
+  // const { startDateTimeUtc, endDateTimeUtc } = processSunriseSunset('2000-9-3', -240);
 
-
-app.get('/', (req, res) => {
-
-  const { API_KEY } = process.env;
-
-  const headers = {
-    'content-type': 'application/json',
-    Accept: 'application/json',
-    Authorization: `Bearer ${API_KEY}`,
+  const queryParams = {
+    lat: 3.512008,
+    lng: -76.357677,
+    date
   };
 
-  // const left = "7:20:32 PM";
-  // const right = "9:52:03 AM";
+  await getPhotoperiodFromAPI({ ...queryParams });
 
-  const { startDateTimeUtc, endDateTimeUtc } = processSunriseSunset('2000-9-3', -240);
-
-  console.log(startDateTimeUtc, startDateTimeUtc)
+  // console.log(data);
 
   // const parsed = parseISO(`${right}T$left}`);
 
-  const hours = differenceInHours(endDateTimeUtc, startDateTimeUtc);
+  // const hours = differenceInHours(endDateTimeUtc, startDateTimeUtc);
 
-  console.log("****hours" , hours)
+  // console.log("****hours" , hours
 
   // testing()
 
