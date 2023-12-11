@@ -27,12 +27,13 @@ export async function getRequest(apiString, endpoint, params) {
     try {
 
         const response = await api.get(endpoint, { ...params });
-        console.log(response.params)
+        // console.log(response.params)
 
         // console.log('params', params)
 
         if (response.ok) {
-            console.log(response.data)
+            // console.log(response.data);
+            return response.data.estimated_actuals;
         } else {
             console.error(response.error);
         }
@@ -49,6 +50,7 @@ export async function getSolarAPI(params) {
 
     const data = await getRequest('solarAPI', '/data/historic/radiation_and_weather.json', {
         ...params,
+        // duration: 'PT5M',
         output_parameters: outputParameters
     });
     return data;
