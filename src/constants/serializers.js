@@ -4,4 +4,5 @@ export const serializeSolarAPI = {
     relative_humidity: 'air_humidity',
     wind_speed_10m: 'wind_speed',
     precipitation_rate: 'precipitation',
+    period_end: 'observation_datetime'
 };

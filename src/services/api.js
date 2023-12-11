@@ -3,7 +3,7 @@ import { api as apiConstants,  headers } from '../constants/api';
 
 const { solarAPIurl, sunrisesunsetAPIurl } = apiConstants;
 
-const outputParameters = 'relative_humidity,wind_speed_10m,air_temp,ghi';
+const outputParameters = 'relative_humidity,wind_speed_10m,air_temp,ghi,precipitation_rate';
 
 
 // const buildSunriseSunsetAPIbody = (params) => ({

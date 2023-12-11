@@ -32,7 +32,7 @@ app.get('/', async (req, res) => {
   const solarAPIparams = {
     latitude: 3.512008,
     longitude: -76.357677,
-    start: '2019-10-01T17:00:00.000Z',
+    start: '2019-09-30T17:00:00.000Z',
     format: 'json',
     duration: 'P31D',
     period: 'PT60M',
@@ -56,9 +56,14 @@ app.get('/', async (req, res) => {
   //   // ... more measurements
   // ];
 
-  const filteredMeasurements = filterAndGroupByDate(data, 'period_end');
+  const measurements = filterAndGroupByDate(data, 'period_end');
 
-  const sqlScript = createInsertStatements(filteredMeasurements);
+
+  const flattenedMeasurements = measurements.flat();
+
+  
+
+  const sqlScript = createInsertStatements(flattenedMeasurements);
   console.log(sqlScript);
   // console.log(filteredMeasurements);
 
@@ -92,7 +97,8 @@ app.get('/', async (req, res) => {
   //   console.log("Unable to fetch -", err);
   // });
 
-  res.json(filteredMeasurements)
+
+  res.send(sqlScript)
 
 })
 
