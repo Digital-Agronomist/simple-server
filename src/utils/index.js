@@ -1,9 +1,8 @@
 const { parse, addMinutes } = require('date-fns');
 const { zonedTimeToUtc, format } = require('date-fns-tz');
-import R from 'ramda';
 import { serializeSolarAPI } from '../constants/serializers';
 
-import { formatDate } from './dateTime';
+// import { formatDate } from './dateTime';
 
 export function processSunriseSunset(date, utcOffset) {
     const dateTimeChicagoStart = `${date} 4:58:07 AM`;
@@ -21,41 +20,10 @@ export function processSunriseSunset(date, utcOffset) {
   
     return { startDateTimeUtc, endDateTimeUtc };
 
-    const sqlFormat = format(dateTimeUtc, "yyyy-MM-dd'T'HH:mm:ss'Z'");
+    // const sqlFormat = format(dateTimeUtc, "yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-    console.log(sqlFormat); // This will be in UTC, formatted for SQL
+    // console.log(sqlFormat); // This will be in UTC, formatted for SQL
 }
-
-
-// export const groupByDateAndFilterFirst = (measurements, dateKey) => {
-//     // Group by formatted date
-//     const groupedByDate = groupBy((measurement) => formatDate(measurement[dateKey]), measurements);
-    
-  
-//     // Map each group to its first element
-//     return values(map(head, groupedByDate));
-// };
-
-// const createInsertStatement = measurement => {
-//     // Convert measurement keys to DB column names and values
-//     const converted = R.toPairs(serializeSolarAPI).reduce((acc, [apiKey, dbColumn]) => {
-//         if (R.has(apiKey, measurement)) {
-//             acc[dbColumn] = measurement[apiKey];
-//         }
-//         return acc;
-//     }, {});
-
-//     // Add time_period_id
-//     converted['time_period_id'] = 1;
-
-//     // Columns and values for the INSERT statement
-//     const columns = R.keys(converted).join(', ');
-//     const values = R.values(converted).map(v => isNaN(v) ? `'${v}'` : v).join(', ');
-
-//     return `INSERT INTO weathers (${columns}) VALUES (${values});`;
-// };
-
-// export const createInsertStatements = measurements => R.map(createInsertStatement, measurements).join('\n');
 
 
 const formatDateForSQL = (isoDate) => {

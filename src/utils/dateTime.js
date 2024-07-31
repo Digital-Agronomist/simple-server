@@ -1,5 +1,5 @@
 import { parseISO, format } from 'date-fns';
-import { groupBy, map, head, filter, values } from 'ramda';
+import { groupBy, filter, values } from 'ramda';
 
 export const formatDate = (dateString) => format(parseISO(dateString), 'yyyy-MM-dd');
 
