@@ -1,4 +1,5 @@
-import 'dotenv/config'
+// import 'dotenv/config'
+require('dotenv').config()
 const express = require('express');
 // const https = require('https');
 const app = express();
@@ -11,7 +12,13 @@ import {createInsertStatements} from './utils';
 
 import { getPhotoperiodFromAPI, getSolarAPI } from './services/api';
 
-const port = process.env.APP_PORT || 3000;
+
+
+console.log(process.env.APP_PORT)
+
+const port = process.env.APP_PORT || 5000;
+
+console.log(port)
 
 app.get('/', async (req, res) => {
 
@@ -28,14 +35,14 @@ app.get('/', async (req, res) => {
 
   const data = await getSolarAPI({ ...solarAPIparams });
 
-  const measurements = filterAndGroupByDate(data, 'period_end');
+  // const measurements = filterAndGroupByDate(data, 'period_end');
 
-  const flattenedMeasurements = measurements.flat();
+  // const flattenedMeasurements = measurements.flat();
 
-  const sqlScript = createInsertStatements(flattenedMeasurements);
-  console.log(sqlScript);
+  // const sqlScript = createInsertStatements(flattenedMeasurements);
+  // console.log(sqlScript);
 
-  res.send(sqlScript)
+  res.send("Hi there!")
 
 })
 

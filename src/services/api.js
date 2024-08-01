@@ -16,6 +16,8 @@ const apiInstance = (apiString) =>
 
 export async function getRequest(apiString, endpoint, params) {
 
+    console.log('apiString', apiString)
+
     const api = apiInstance(apiString)
 
     try {
