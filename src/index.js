@@ -17,7 +17,7 @@ const port = process.env.APP_PORT || 5000;
 
 console.log(port)
 
-app.get('/', async (req, res) => {
+app.get('/', async (request, response) => {
 
 
   const solarAPIparams = {
@@ -39,7 +39,7 @@ app.get('/', async (req, res) => {
   // const sqlScript = createInsertStatements(flattenedMeasurements);
   // console.log(sqlScript);
 
-  res.send("Hi there!")
+  response.send("Hi there!")
 
 })
 
