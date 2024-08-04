@@ -23,9 +23,9 @@ export async function getRequest(apiString, endpoint, params) {
     try {
 
         const response = await api.get(endpoint, { ...params });
-        // console.log(response.params)
+        console.log('response.ok', response.ok)
 
-        // console.log('params', params)
+        console.log('params', params)
 
         if (response.ok) {
             // console.log(response.data);

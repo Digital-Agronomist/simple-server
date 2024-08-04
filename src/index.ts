@@ -32,9 +32,9 @@ app.get('/', async (request, response) => {
 
   const data = await getSolarAPI({ ...solarAPIparams });
 
-  // const measurements = filterAndGroupByDate(data, 'period_end');
+  const measurements = filterAndGroupByDate(data, 'period_end');
 
-  // const flattenedMeasurements = measurements.flat();
+  const flattenedMeasurements = measurements.flat();
 
   // const sqlScript = createInsertStatements(flattenedMeasurements);
   // console.log(sqlScript);
