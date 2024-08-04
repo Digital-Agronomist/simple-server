@@ -13,9 +13,6 @@ import {createInsertStatements} from './utils';
 import { getPhotoperiodFromAPI, getSolarAPI } from './services/api';
 
 
-
-console.log(process.env.APP_PORT)
-
 const port = process.env.APP_PORT || 5000;
 
 console.log(port)
@@ -26,7 +23,7 @@ app.get('/', async (req, res) => {
   const solarAPIparams = {
     latitude: 3.512008,
     longitude: -76.357677,
-    start: '2019-09-30T17:00:00.000Z',
+    start: '2019-09-30T17:00:00.000Z', // timestamp
     format: 'json',
     duration: 'P31D',
     period: 'PT60M',
