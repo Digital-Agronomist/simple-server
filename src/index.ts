@@ -1,25 +1,15 @@
-// import 'dotenv/config'
-require('dotenv').config()
-const express = require('express');
-// const https = require('https');
-const app = express();
-const { mean, standardDeviation, variance } = require('simple-statistics');
-// import { map } from 'ramda';
-import differenceInHours from 'date-fns/differenceInHours';
-// import { processSunriseSunset, groupByDateAndFilterFirst } from './utils';
+import 'dotenv/config';
+import express, { Request, Response } from 'express';
 import { filterAndGroupByDate } from './utils/dateTime';
-import {createInsertStatements} from './utils';
-
 import { getPhotoperiodFromAPI, getSolarAPI } from './services/api';
 
+const app = express();
 
 const port = process.env.APP_PORT || 5000;
 
-console.log(port)
+console.log(port);
 
-app.get('/', async (request, response) => {
-
-
+app.get('/', async (request: Request, response: Response) => {
   const solarAPIparams = {
     latitude: 3.512008,
     longitude: -76.357677,
@@ -27,25 +17,25 @@ app.get('/', async (request, response) => {
     format: 'json',
     duration: 'P31D',
     period: 'PT60M',
+  };
+
+  try {
+    const data = await getSolarAPI({ ...solarAPIparams });
+
+    const measurements = filterAndGroupByDate(data, 'period_end');
+
+    const flattenedMeasurements = measurements.flat();
+
+    // const sqlScript = createInsertStatements(flattenedMeasurements);
+    // console.log(sqlScript);
+
+    response.send('Hi there!');
+  } catch (error) {
+    console.error(error);
+    response.status(500).send('Internal Server Error');
   }
-
-
-  const data = await getSolarAPI({ ...solarAPIparams });
-
-  const measurements = filterAndGroupByDate(data, 'period_end');
-
-  const flattenedMeasurements = measurements.flat();
-
-  // const sqlScript = createInsertStatements(flattenedMeasurements);
-  // console.log(sqlScript);
-
-  response.send("Hi there!")
-
-})
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
 });
 
-
-
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});

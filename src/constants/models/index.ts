@@ -34,8 +34,6 @@ interface Result {
     sample: string;
 }
 
-
-
 interface PlantResult extends Result {
     plant: Plant;
 };
@@ -48,11 +46,6 @@ const analysisMethod = {
     name: "ICP",
 };
 
-
-
-// const plantResult = {
-
-// }
 
 const soil: Soil = {
     name: "Coloma",
@@ -83,14 +76,6 @@ const plants: Plant[] = [
         description: "",
     },
 ]
-
-
-
-// const soils_first: Soil[] = [
-    
-// ]
-
-
 
 const locationFirst: LocationInterface = {
     longitude: "",
@@ -123,9 +108,6 @@ const soil_result = {
     timePeriod
 };
 
-
-
-
 const resultObject: Result = {
     analysisMethod,
     location: locationFirst,
@@ -146,7 +128,7 @@ const soilObject: SoilResult = {
 
 const plantNames = ["Corn", "Alfalfa", "Cocoa", "Coffee", "Soybean"];
 
-function plantCreator(name, type, description) {
+function plantCreator(name: string, type: string, description: string) {
 
     return {
         name,
@@ -156,4 +138,3 @@ function plantCreator(name, type, description) {
 }
 
 const plantsArray: Plant[] = plantNames.map((plantName) => plantCreator(plantName, "", ""));
-

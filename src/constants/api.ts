@@ -1,7 +1,7 @@
 export const headers = {
     'content-type': 'application/json',
     Accept: 'application/json',
-    Authorization: `Bearer ${process.env.API_KEY}`,
+    Authorization: `Bearer ${process.env.API_KEY || ''}`,
 };
 
 export const api = {
