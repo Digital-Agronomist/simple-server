@@ -5,7 +5,7 @@ v18
 `npm install`
 
 ### Run dev server
-`npm run dev`
+`npm run dev-ts`
 
 ### Endpoint
 `/`
