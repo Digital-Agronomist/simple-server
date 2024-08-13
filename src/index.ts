@@ -1,4 +1,5 @@
-import 'dotenv/config';
+import dotenv from "dotenv";
+dotenv.config();
 import express, { Request, Response } from 'express';
 import { filterAndGroupByDate } from './utils/dateTime';
 import { getPhotoperiodFromAPI, getSolarAPI } from './services/api';
