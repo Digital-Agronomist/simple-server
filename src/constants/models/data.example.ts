@@ -1,12 +1,12 @@
-interface Soil {
+export interface Soil {
     name: string;
     type?: string;
     description?: string;
 }
 
-interface Plant extends Soil {}
+export interface Plant extends Soil {}
 
-interface LocationInterface {
+export interface LocationInterface {
     longitude: string;
     latitude: string;
     country: string;
@@ -15,18 +15,18 @@ interface LocationInterface {
     city: string;
 }
 
-interface AnalyticalMethod {
+export interface AnalyticalMethod {
     name: string;
     analyticalMethodType?: string;
 }
 
-interface TimePeriod {
+export interface TimePeriod {
     startDate: Date;
     endDate: Date;
     period: string;
 }
 
-interface Result {
+export interface Result {
     analysisMethod: AnalyticalMethod;
     location: LocationInterface;
     timePeriod: TimePeriod;
@@ -34,11 +34,11 @@ interface Result {
     sample: string;
 }
 
-interface PlantResult extends Result {
+export interface PlantResult extends Result {
     plant: Plant;
 };
 
-interface SoilResult extends Result {
+export interface SoilResult extends Result {
     soil: Soil;
 }
 

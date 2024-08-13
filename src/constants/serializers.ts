@@ -1,4 +1,4 @@
-interface serializeSolarAPIType {
+export interface serializeSolarAPIType {
     air_temp: string;
     ghi: string;
     relative_humidity: string;
