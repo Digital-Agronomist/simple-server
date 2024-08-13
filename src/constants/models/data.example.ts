@@ -1,56 +1,140 @@
-const analyticalMethods = [
-    { name: "Mass Spectrometry (MS)", analyticalMethodType: "Inductively Coupled Plasma (ICP)" },
-    { name: "Optical Emission Spectrometry (OES)", analyticalMethodType: "Inductively Coupled Plasma (ICP)" },
-    { name: "Handheld / Portable X-ray Fluorescent", analyticalMethodType: "X-ray Fluorescence (XRF)" },
-    { name: "Micro X-ray Fluorescence Spectrometry", analyticalMethodType: "X-ray Fluorescence (XRF)" },
-    { name: "Total reflection X-ray Fluorescence", analyticalMethodType: "X-ray Fluorescence (XRF)" },
-];
+interface Soil {
+    name: string;
+    type?: string;
+    description?: string;
+}
 
-const timePeriods = [
-    { startDate: new Date("2019-10-01"), endDate: new Date("2019-10-31"), period: "test" },
-];
+interface Plant extends Soil {}
 
-const locations = [
-    { longitude: "42.885583", latitude: "-89.499431", country: "United States", state: "Wisconsin", county: "Dane", city: "Belleville" },
-    { longitude: "42.860542", latitude: "-89.504357", country: "United States", state: "Wisconsin", county: "Dane", city: "Belleville" },
-    { longitude: "42.879866", latitude: "-89.504933", country: "United States", state: "Wisconsin", county: "Dane", city: "Belleville" },
-    { longitude: "42.887706", latitude: "-89.510033", country: "United States", state: "Wisconsin", county: "Dane", city: "Belleville" },
-    { longitude: "42.871349", latitude: "-89.509177", country: "United States", state: "Wisconsin", county: "Dane", city: "Belleville" },
-];
+interface LocationInterface {
+    longitude: string;
+    latitude: string;
+    country: string;
+    state: string;
+    county: string;
+    city: string;
+}
 
-const soils = [
-    { name: "Coloma", type: "Sandy", description: "A sandy soil found in various regions." },
-];
+interface AnalyticalMethod {
+    name: string;
+    analyticalMethodType?: string;
+}
 
-const plants = [
-    { name: "Corn", type: "Field Corn", description: "Field Corn is primarily used for animal feed, ethanol production, and manufactured goods." },
-    { name: "CO Cassava", type: "Cassava", description: "Cassava Ciat Pamira Colombia October, 2019" },
-];
+interface TimePeriod {
+    startDate: Date;
+    endDate: Date;
+    period: string;
+}
 
-const plantResults = [
-    {
-        plant: { name: "Corn", type: "Field Corn", description: "Field Corn is primarily used for animal feed, ethanol production, and manufactured goods." },
-        analysisMethod: { name: "Optical Emission Spectrometry (OES)", analyticalMethodType: "Inductively Coupled Plasma (ICP)" },
-        location: { longitude: "42.885583", latitude: "-89.499431", country: "United States", state: "Wisconsin", county: "Dane", city: "Belleville" },
-        timePeriod: { startDate: new Date("2019-10-01"), endDate: new Date("2019-10-31"), period: "test" },
-        rep: "0",
-        sample: "201"
-    },
-    {
-        plant: { name: "Corn", type: "Field Corn", description: "Field Corn is primarily used for animal feed, ethanol production, and manufactured goods." },
-        analysisMethod: { name: "Optical Emission Spectrometry (OES)", analyticalMethodType: "Inductively Coupled Plasma (ICP)" },
-        location: { longitude: "42.885583", latitude: "-89.499431", country: "United States", state: "Wisconsin", county: "Dane", city: "Belleville" },
-        timePeriod: { startDate: new Date("2019-10-01"), endDate: new Date("2019-10-31"), period: "test" },
-        rep: "1",
-        sample: "202"
-    },
-];
+interface Result {
+    analysisMethod: AnalyticalMethod;
+    location: LocationInterface;
+    timePeriod: TimePeriod;
+    rep: string;
+    sample: string;
+}
 
-const plantResultObject = {
-    plant: { name: "Corn", type: "Field Corn", description: "Field Corn is primarily used for animal feed, ethanol production, and manufactured goods." },
-    analysisMethod: { name: "Optical Emission Spectrometry (OES)", analyticalMethodType: "Inductively Coupled Plasma (ICP)" },
-    location: { longitude: "42.885583", latitude: "-89.499431", country: "United States", state: "Wisconsin", county: "Dane", city: "Belleville" },
-    timePeriod: { startDate: new Date("2019-10-01"), endDate: new Date("2019-10-31"), period: "test" },
-    rep: "0",
-    sample: "201"
+interface PlantResult extends Result {
+    plant: Plant;
 };
+
+interface SoilResult extends Result {
+    soil: Soil;
+}
+
+const analysisMethod = {
+    name: "ICP",
+};
+
+
+const soil: Soil = {
+    name: "Coloma",
+    type: "Sandy",
+    description: ""
+};
+
+const plant: Plant = {
+    name: "Corn",
+    type: "Type A",
+    description: ""
+};
+
+
+const plantsA: Plant[] = [
+    {
+        name: "Corn",
+        type: "Type A",
+    },
+    {
+        name: "Soybean",
+        type: "Type A",
+        description: ""
+    },
+    {
+        name: "Alfalfa",
+        type: "Type B",
+        description: "",
+    },
+]
+
+const locationFirst: LocationInterface = {
+    longitude: "",
+    latitude: "",
+    country: "USA",
+    state: "Wisconsin",
+    county: "",
+    city: "Belleville"
+};
+
+const timePeriod: TimePeriod = {
+    startDate: new Date,
+    endDate: new Date,
+    period: "Period AB"
+};
+
+const plantResult: PlantResult = {
+    plant,
+    analysisMethod,
+    location: locationFirst,
+    timePeriod,
+    rep: "S1",
+    sample: "220"
+};
+
+const soil_result = {
+    soil,
+    analysisMethod,
+    location,
+    timePeriod
+};
+
+const resultObject: Result = {
+    analysisMethod,
+    location: locationFirst,
+    timePeriod,
+    rep: "S1",
+    sample: "220"
+}
+
+const plantObject: PlantResult = {
+    ...resultObject,
+    plant,
+}
+
+const soilObject: SoilResult = {
+    ...resultObject,
+    soil,
+}
+
+const plantNames = ["Corn", "Alfalfa", "Cocoa", "Coffee", "Soybean"];
+
+function plantCreator(name: string, type: string, description: string) {
+
+    return {
+        name,
+        type,
+        description,
+    }
+}
+
+const plantsArray: Plant[] = plantNames.map((plantName) => plantCreator(plantName, "", ""));
