@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import { Sequelize } from 'sequelize';
-import { initModels } from './init-models';
+import { initModels } from './models/init-models';
 
 export const sequelize = new Sequelize(
   process.env.DB_NAME!,

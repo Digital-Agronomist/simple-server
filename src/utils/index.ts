@@ -52,3 +52,6 @@ const createInsertStatement = (measurement: Measurement): string => {
 
 export const createInsertStatements = (measurements: Measurement[]): string =>
   measurements.map(createInsertStatement).join('\n');
+
+export const sleep = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms))

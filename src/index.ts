@@ -11,16 +11,16 @@ console.log(port);
 
 app.get('/', async (request: Request, response: Response) => {
 
-  try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
+  // try {
+  //   await sequelize.authenticate();
+  //   console.log('Connection has been established successfully.');
 
-    const plants = await models.plants.findAll();
-    response.json(plants);
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-    response.status(500).send('Database connection failed');
-  }
+  //   const plants = await models.plants.findAll();
+  //   response.json(plants);
+  // } catch (error) {
+  //   console.error('Unable to connect to the database:', error);
+  //   response.status(500).send('Database connection failed');
+  // }
 
   async function testSoilModel() {
     try {
@@ -34,7 +34,7 @@ app.get('/', async (request: Request, response: Response) => {
     }
   }
   
-  testSoilModel();
+  // testSoilModel();
 
   async function testAnalyticalMethodsModel() {
     try {
@@ -48,7 +48,7 @@ app.get('/', async (request: Request, response: Response) => {
     }
   }
   
-  testAnalyticalMethodsModel();
+  // testAnalyticalMethodsModel();
 
   async function testLocationsModel() {
     try {
@@ -63,7 +63,24 @@ app.get('/', async (request: Request, response: Response) => {
     }
   }
 
-  testLocationsModel();
+  // testLocationsModel();
+
+  async function testTimePeriods() {
+    try {
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+  
+      const allTimePeriods = await models.timePeriods.findAll();
+      console.log('All Time Periods:', JSON.stringify(allTimePeriods, null, 2));
+
+      response.json(allTimePeriods);
+  
+    } catch (error) {
+      console.error('Unable to connect to the database or fetch data:', error);
+    }
+  }
+  
+  testTimePeriods();
 
   
 });
