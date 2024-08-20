@@ -1,8 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express, { Request, Response } from 'express';
-import { filterAndGroupByDate } from './utils/dateTime';
-import { getPhotoperiodFromAPI, getSolarAPI } from './services/api';
+import { sequelize, models } from "./sequelize";
 
 const app = express();
 
@@ -11,31 +10,52 @@ const port = process.env.APP_PORT || 5000;
 console.log(port);
 
 app.get('/', async (request: Request, response: Response) => {
-  const solarAPIparams = {
-    latitude: 3.512008,
-    longitude: -76.357677,
-    start: '2019-09-30T17:00:00.000Z', // timestamp
-    format: 'json',
-    duration: 'P31D',
-    period: 'PT60M',
-  };
 
   try {
-    const data = await getSolarAPI({ ...solarAPIparams });
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
 
-    const measurements = filterAndGroupByDate(data, 'period_end');
-
-    const flattenedMeasurements = measurements.flat();
-
-    // const sqlScript = createInsertStatements(flattenedMeasurements);
-    // console.log(sqlScript);
-
-    response.send('Hi there!');
+    const plants = await models.plants.findAll();
+    response.json(plants);
   } catch (error) {
-    console.error(error);
-    response.status(500).send('Internal Server Error');
+    console.error('Unable to connect to the database:', error);
+    response.status(500).send('Database connection failed');
   }
+
+  async function testSoilModel() {
+    try {
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+  
+      const soils = await models.soils.findAll();
+      console.log('Soils:', JSON.stringify(soils, null, 2));
+    } catch (error) {
+      console.error('Unable to connect to the database:', error);
+    }
+  }
+  
+  testSoilModel();
+
+  async function testAnalyticalMethodsModel() {
+    try {
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+  
+      const methods = await models.analyticalMethods.findAll();
+      console.log('Analytical Methods:', JSON.stringify(methods, null, 2));
+    } catch (error) {
+      console.error('Unable to connect to the database:', error);
+    }
+  }
+  
+  testAnalyticalMethodsModel();
+  
 });
+
+// new routes comming up!!!! 
+
+// app.get('/plants')
+// app.get('soils')
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

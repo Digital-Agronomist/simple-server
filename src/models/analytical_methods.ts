@@ -1,26 +1,24 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 
-export interface Plant {
+export interface AnalyticalMethodsAttributes {
   id: number;
   name: string;
-  plant_type: string;
-  description?: string;
+  analytical_method_type: string;
   created_at: Date;
   updated_at: Date;
 }
 
-export type PlantCreationAttributes = Optional<Plant, 'id' | 'description' | 'created_at' | 'updated_at'>;
+export type AnalyticalMethodsCreationAttributes = Optional<AnalyticalMethodsAttributes, 'id' | 'created_at' | 'updated_at'>;
 
-export class PlantModel extends Model<Plant, PlantCreationAttributes> implements Plant {
+export class AnalyticalMethodsModel extends Model<AnalyticalMethodsAttributes, AnalyticalMethodsCreationAttributes> implements AnalyticalMethodsAttributes {
   public id!: number;
   public name!: string;
-  public plant_type!: string;
-  public description?: string;
+  public analytical_method_type!: string;
   public created_at!: Date;
   public updated_at!: Date;
 
-  static initModel(sequelize: Sequelize): typeof PlantModel {
-    return PlantModel.init(
+  static initModel(sequelize: Sequelize): typeof AnalyticalMethodsModel {
+    return AnalyticalMethodsModel.init(
       {
         id: {
           autoIncrement: true,
@@ -32,13 +30,9 @@ export class PlantModel extends Model<Plant, PlantCreationAttributes> implements
           type: DataTypes.STRING(255),
           allowNull: false,
         },
-        plant_type: {
+        analytical_method_type: {
           type: DataTypes.STRING(255),
           allowNull: false,
-        },
-        description: {
-          type: DataTypes.TEXT,
-          allowNull: true,
         },
         created_at: {
           type: DataTypes.DATE,
@@ -55,7 +49,7 @@ export class PlantModel extends Model<Plant, PlantCreationAttributes> implements
       },
       {
         sequelize,
-        tableName: 'plants',
+        tableName: 'analytical_methods',
         timestamps: true,
         createdAt: 'created_at',
         updatedAt: 'updated_at',
@@ -72,4 +66,4 @@ export class PlantModel extends Model<Plant, PlantCreationAttributes> implements
   }
 }
 
-export default PlantModel;
+export default AnalyticalMethodsModel;

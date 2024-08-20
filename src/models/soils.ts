@@ -1,26 +1,26 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 
-export interface Plant {
+export interface Soil {
   id: number;
   name: string;
-  plant_type: string;
+  soil_type?: string;
   description?: string;
   created_at: Date;
   updated_at: Date;
 }
 
-export type PlantCreationAttributes = Optional<Plant, 'id' | 'description' | 'created_at' | 'updated_at'>;
+export type SoilCreationAttributes = Optional<Soil, 'id' | 'soil_type' | 'description' | 'created_at' | 'updated_at'>;
 
-export class PlantModel extends Model<Plant, PlantCreationAttributes> implements Plant {
+export class SoilModel extends Model<Soil, SoilCreationAttributes> implements Soil {
   public id!: number;
   public name!: string;
-  public plant_type!: string;
+  public soil_type?: string;
   public description?: string;
   public created_at!: Date;
   public updated_at!: Date;
 
-  static initModel(sequelize: Sequelize): typeof PlantModel {
-    return PlantModel.init(
+  static initModel(sequelize: Sequelize): typeof SoilModel {
+    return SoilModel.init(
       {
         id: {
           autoIncrement: true,
@@ -32,9 +32,9 @@ export class PlantModel extends Model<Plant, PlantCreationAttributes> implements
           type: DataTypes.STRING(255),
           allowNull: false,
         },
-        plant_type: {
+        soil_type: {
           type: DataTypes.STRING(255),
-          allowNull: false,
+          allowNull: true,
         },
         description: {
           type: DataTypes.TEXT,
@@ -55,7 +55,7 @@ export class PlantModel extends Model<Plant, PlantCreationAttributes> implements
       },
       {
         sequelize,
-        tableName: 'plants',
+        tableName: 'soils',
         timestamps: true,
         createdAt: 'created_at',
         updatedAt: 'updated_at',
@@ -72,4 +72,4 @@ export class PlantModel extends Model<Plant, PlantCreationAttributes> implements
   }
 }
 
-export default PlantModel;
+export default SoilModel;
