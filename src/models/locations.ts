@@ -1,27 +1,34 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 
-export interface Plant {
+export interface LocationsAttributes {
   id: number;
-  name: string;
-  plant_type: string;
-  description?: string;
+  longitude: string;
+  latitude: string;
+  country: string;
+  state: string;
+  county: string;
+  city: string;
   created_at: Date;
   updated_at: Date;
 }
 
-export type PlantCreationAttributes = 
-  Optional<Plant, 'id' | 'description' | 'created_at' | 'updated_at'>;
+export type LocationsCreationAttributes = 
+  Optional<LocationsAttributes, 'id' | 'created_at' | 'updated_at'>;
 
-export class PlantModel extends Model<Plant, PlantCreationAttributes> implements Plant {
+export class LocationsModel extends Model<LocationsAttributes,
+  LocationsCreationAttributes> implements LocationsAttributes {
   public id!: number;
-  public name!: string;
-  public plant_type!: string;
-  public description?: string;
+  public longitude!: string;
+  public latitude!: string;
+  public country!: string;
+  public state!: string;
+  public county!: string;
+  public city!: string;
   public created_at!: Date;
   public updated_at!: Date;
 
-  static initModel(sequelize: Sequelize): typeof PlantModel {
-    return PlantModel.init(
+  static initModel(sequelize: Sequelize): typeof LocationsModel {
+    return LocationsModel.init(
       {
         id: {
           autoIncrement: true,
@@ -29,17 +36,29 @@ export class PlantModel extends Model<Plant, PlantCreationAttributes> implements
           allowNull: false,
           primaryKey: true,
         },
-        name: {
+        longitude: {
           type: DataTypes.STRING(255),
           allowNull: false,
         },
-        plant_type: {
+        latitude: {
           type: DataTypes.STRING(255),
           allowNull: false,
         },
-        description: {
-          type: DataTypes.TEXT,
-          allowNull: true,
+        country: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+        },
+        state: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+        },
+        county: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+        },
+        city: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
         },
         created_at: {
           type: DataTypes.DATE,
@@ -56,7 +75,7 @@ export class PlantModel extends Model<Plant, PlantCreationAttributes> implements
       },
       {
         sequelize,
-        tableName: 'plants',
+        tableName: 'locations',
         timestamps: true,
         createdAt: 'created_at',
         updatedAt: 'updated_at',
@@ -73,4 +92,4 @@ export class PlantModel extends Model<Plant, PlantCreationAttributes> implements
   }
 }
 
-export default PlantModel;
+export default LocationsModel;

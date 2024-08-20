@@ -8,9 +8,11 @@ export interface AnalyticalMethodsAttributes {
   updated_at: Date;
 }
 
-export type AnalyticalMethodsCreationAttributes = Optional<AnalyticalMethodsAttributes, 'id' | 'created_at' | 'updated_at'>;
+export type AnalyticalMethodsCreationAttributes =
+  Optional<AnalyticalMethodsAttributes, 'id' | 'created_at' | 'updated_at'>;
 
-export class AnalyticalMethodsModel extends Model<AnalyticalMethodsAttributes, AnalyticalMethodsCreationAttributes> implements AnalyticalMethodsAttributes {
+export class AnalyticalMethodsModel extends Model<AnalyticalMethodsAttributes,
+  AnalyticalMethodsCreationAttributes> implements AnalyticalMethodsAttributes {
   public id!: number;
   public name!: string;
   public analytical_method_type!: string;

@@ -9,7 +9,8 @@ export interface Soil {
   updated_at: Date;
 }
 
-export type SoilCreationAttributes = Optional<Soil, 'id' | 'soil_type' | 'description' | 'created_at' | 'updated_at'>;
+export type SoilCreationAttributes = 
+  Optional<Soil, 'id' | 'soil_type' | 'description' | 'created_at' | 'updated_at'>;
 
 export class SoilModel extends Model<Soil, SoilCreationAttributes> implements Soil {
   public id!: number;

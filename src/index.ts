@@ -49,6 +49,22 @@ app.get('/', async (request: Request, response: Response) => {
   }
   
   testAnalyticalMethodsModel();
+
+  async function testLocationsModel() {
+    try {
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+
+      const allLocations = await models.locations.findAll();
+      console.log('All Locations:', JSON.stringify(allLocations, null, 2));
+
+    } catch (error) {
+      console.error('Unable to connect to the database or fetch data:', error);
+    }
+  }
+
+  testLocationsModel();
+
   
 });
 
