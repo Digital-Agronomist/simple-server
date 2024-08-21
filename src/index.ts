@@ -1,8 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express, { Request, Response } from 'express';
-import { filterAndGroupByDate } from './utils/dateTime';
-import { getPhotoperiodFromAPI, getSolarAPI } from './services/api';
+import { sequelize, models } from "./sequelize";
 
 const app = express();
 
@@ -11,31 +10,102 @@ const port = process.env.APP_PORT || 5000;
 console.log(port);
 
 app.get('/', async (request: Request, response: Response) => {
-  const solarAPIparams = {
-    latitude: 3.512008,
-    longitude: -76.357677,
-    start: '2019-09-30T17:00:00.000Z', // timestamp
-    format: 'json',
-    duration: 'P31D',
-    period: 'PT60M',
-  };
 
-  try {
-    const data = await getSolarAPI({ ...solarAPIparams });
+  // try {
+  //   await sequelize.authenticate();
+  //   console.log('Connection has been established successfully.');
 
-    const measurements = filterAndGroupByDate(data, 'period_end');
+  //   const plants = await models.plants.findAll();
+  //   response.json(plants);
+  // } catch (error) {
+  //   console.error('Unable to connect to the database:', error);
+  //   response.status(500).send('Database connection failed');
+  // }
 
-    const flattenedMeasurements = measurements.flat();
-
-    // const sqlScript = createInsertStatements(flattenedMeasurements);
-    // console.log(sqlScript);
-
-    response.send('Hi there!');
-  } catch (error) {
-    console.error(error);
-    response.status(500).send('Internal Server Error');
+  async function testSoilModel() {
+    try {
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+  
+      const soils = await models.soils.findAll();
+      console.log('Soils:', JSON.stringify(soils, null, 2));
+    } catch (error) {
+      console.error('Unable to connect to the database:', error);
+    }
   }
+  
+  // testSoilModel();
+
+  async function testAnalyticalMethodsModel() {
+    try {
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+  
+      const methods = await models.analyticalMethods.findAll();
+      console.log('Analytical Methods:', JSON.stringify(methods, null, 2));
+    } catch (error) {
+      console.error('Unable to connect to the database:', error);
+    }
+  }
+  
+  // testAnalyticalMethodsModel();
+
+  async function testLocationsModel() {
+    try {
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+
+      const allLocations = await models.locations.findAll();
+      console.log('All Locations:', JSON.stringify(allLocations, null, 2));
+
+    } catch (error) {
+      console.error('Unable to connect to the database or fetch data:', error);
+    }
+  }
+
+  // testLocationsModel();
+
+  async function testTimePeriods() {
+    try {
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+  
+      const allTimePeriods = await models.timePeriods.findAll();
+      console.log('All Time Periods:', JSON.stringify(allTimePeriods, null, 2));
+
+      response.json(allTimePeriods);
+  
+    } catch (error) {
+      console.error('Unable to connect to the database or fetch data:', error);
+    }
+  }
+  
+  // testTimePeriods();
+
+  async function testhNutrients() {
+    try {
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+  
+      const allNutrients = await models.nutrients.findAll();
+      console.log('All Nutrients:', JSON.stringify(allNutrients, null, 2));
+
+      response.json(allNutrients);
+  
+    } catch (error) {
+      console.error('Unable to connect to the database or fetch data:', error);
+    }
+  }
+  
+  testhNutrients();
+
+  
 });
+
+// new routes comming up!!!! 
+
+// app.get('/plants')
+// app.get('soils')
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
