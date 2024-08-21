@@ -5,6 +5,7 @@ import PlantModel from "./plants";
 import SoilModel from "./soils"
 import LocationsModel from './locations';
 import TimePeriodsModel from './time_periods';
+import NutrientsModel from "./nutrients";
 
 export {
   // AnalyticalInstrumentsModel,
@@ -20,6 +21,7 @@ export function initModels(sequelize: Sequelize) {
   const soils = SoilModel.initModel(sequelize);
   const locations = LocationsModel.initModel(sequelize);
   const timePeriods= TimePeriodsModel.initModel(sequelize);
+  const nutrients = NutrientsModel.initModel(sequelize);
 
   // analyticalInstruments.belongsTo(analyticalMethods, { as: 'analytical_method', foreignKey: 'analytical_method_id' });
 
@@ -30,6 +32,7 @@ export function initModels(sequelize: Sequelize) {
     soils,
     locations,
     timePeriods,
+    nutrients,
   };
 }
     

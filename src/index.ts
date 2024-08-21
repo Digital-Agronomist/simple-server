@@ -80,7 +80,24 @@ app.get('/', async (request: Request, response: Response) => {
     }
   }
   
-  testTimePeriods();
+  // testTimePeriods();
+
+  async function testhNutrients() {
+    try {
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+  
+      const allNutrients = await models.nutrients.findAll();
+      console.log('All Nutrients:', JSON.stringify(allNutrients, null, 2));
+
+      response.json(allNutrients);
+  
+    } catch (error) {
+      console.error('Unable to connect to the database or fetch data:', error);
+    }
+  }
+  
+  testhNutrients();
 
   
 });
