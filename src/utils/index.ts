@@ -29,29 +29,29 @@ const formatDateForSQL = (isoDate: string): string => {
   return date.toISOString().slice(0, 19).replace('T', ' ');
 };
 
-const createInsertStatement = (measurement: Measurement): string => {
-  const columns: string[] = [];
-  const values: (number | string)[] = [];
+// const createInsertStatement = (measurement: Measurement): string => {
+//   const columns: string[] = [];
+//   const values: (number | string)[] = [];
 
-  for (const key in serializeSolarAPI) {
-    if (measurement.hasOwnProperty(key)) {
-      columns.push(serializeSolarAPI[key]);
-      const value = key === 'period_end' ? formatDateForSQL(measurement[key]) : measurement[key];
-      values.push(typeof value === 'number' ? value : `'${value}'`);
-    }
-  }
+//   for (const key in serializeSolarAPI) {
+//     if (measurement.hasOwnProperty(key)) {
+//       columns.push(serializeSolarAPI[key]);
+//       const value = key === 'period_end' ? formatDateForSQL(measurement[key]) : measurement[key];
+//       values.push(typeof value === 'number' ? value : `'${value}'`);
+//     }
+//   }
 
-  columns.push('time_period_id');
-  values.push(1);
+//   columns.push('time_period_id');
+//   values.push(1);
 
-  const columnList = columns.join(', ');
-  const valueList = values.join(', ');
+//   const columnList = columns.join(', ');
+//   const valueList = values.join(', ');
 
-  return `INSERT INTO weathers (${columnList}) VALUES (${valueList});`;
-};
+//   return `INSERT INTO weathers (${columnList}) VALUES (${valueList});`;
+// };
 
-export const createInsertStatements = (measurements: Measurement[]): string =>
-  measurements.map(createInsertStatement).join('\n');
+// export const createInsertStatements = (measurements: Measurement[]): string =>
+//   measurements.map(createInsertStatement).join('\n');
 
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms))
